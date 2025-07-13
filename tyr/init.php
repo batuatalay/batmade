@@ -1,24 +1,29 @@
 <?php
-define("DEVELOPMENT", true);
-if(DEVELOPMENT) {
-	define("ENV", "http://localhost:83/");
-	define("BASE", "/var/www/html/");
-	define("DBHOST", "panel_db");
-	define("DBNAME", "web-app");
-	define("PANEL", "https://adminzone.newmore.com.tr/");
-
-} else {
-	define("ENV", "https://tyr.newmore.com.tr/");
-	define("PANEL", "https://tyr.newmore.com.tr/");
-	define("BASE", "/home/newmorec/tyr.newmore.com.tr/");
-	define("DBHOST", "localhost");
-	define("DBNAME", "newmorec_zone");
+// Load environment variables
+function loadEnv($path) {
+    if (!file_exists($path)) {
+        throw new Exception(".env file not found: $path");
+    }
+    
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos($line, '#') === 0) continue; // Skip comments
+        if (strpos($line, '=') === false) continue; // Skip invalid lines
+        
+        list($key, $value) = explode('=', $line, 2);
+        $key = trim($key);
+        $value = trim($value);
+        
+        // Remove quotes if present
+        if (preg_match('/^"(.*)"$/', $value, $matches)) {
+            $value = $matches[1];
+        }
+        
+        $_ENV[$key] = $value;
+        putenv("$key=$value");
+        define($key, $value);
+    }
 }
 
-if(DEVELOPMENT) {
-	define("DBUSERNAME", "root");
-	define("DBPASSWORD", "1q2w3e4r");
-} else {
-	define("DBUSERNAME", "newmorec_adminZone");
-	define("DBPASSWORD", "f4ff7bc5d5783457231e5260c8c7ac98b52d99aba817b7cf3267d1ee3f22afc1");
-}
+// Load .env file
+loadEnv(__DIR__ . '/.env');

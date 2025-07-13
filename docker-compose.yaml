@@ -49,25 +49,25 @@ services:
       - proxy-network
 
   #Artemis template
-  artemis-app:
-    build: 
-      context: .
-      dockerfile: ./docker/Dockerfile.apache
-    container_name: artemis_app
-    ports:
-      - "82:80"
-    volumes:
-      - ./artemis:/var/www/html
-    environment:
-      - MYSQL_HOST=panel_db
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=artemis-db
-      - MYSQL_USER=ironman
-      - MYSQL_PASSWORD=1q2w3e4r
-    command: >
-      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
-    networks:
-      - proxy-network  
+  # artemis-app:
+  #   build: 
+  #     context: .
+  #     dockerfile: ./docker/Dockerfile.apache
+  #   container_name: artemis_app
+  #   ports:
+  #     - "82:80"
+  #   volumes:
+  #     - ./artemis:/var/www/html
+  #   environment:
+  #     - MYSQL_HOST=panel_db
+  #     - MYSQL_PORT=3306
+  #     - MYSQL_DATABASE=artemis-db
+  #     - MYSQL_USER=ironman
+  #     - MYSQL_PASSWORD=1q2w3e4r
+  #   command: >
+  #     bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+  #   networks:
+  #     - proxy-network  
 
   #bestet Template
   bestet-app:
