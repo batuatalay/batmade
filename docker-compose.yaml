@@ -55,11 +55,11 @@ services:
       dockerfile: ./docker/Dockerfile.apache
     container_name: artemis_app
     ports:
-      - "81:80"
+      - "82:80"
     volumes:
       - ./artemis:/var/www/html
     environment:
-      - MYSQL_HOST=adminzone-db
+      - MYSQL_HOST=panel_db
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=artemis-db
       - MYSQL_USER=ironman
@@ -67,20 +67,20 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
     networks:
-      - network  
+      - proxy-network  
 
   #bestet Template
   bestet-app:
     build: 
       context: .
       dockerfile: ./docker/Dockerfile.apache
-    container_name: artemis_app
+    container_name: bestet_app
     ports:
-      - "82:80"
+      - "83:80"
     volumes:
       - ./bestet:/var/www/html
     environment:
-      - MYSQL_HOST=adminzone-db
+      - MYSQL_HOST=panel_db
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=bestet-db
       - MYSQL_USER=ironman
@@ -88,20 +88,20 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
     networks:
-      - network  
+      - proxy-network  
 
   #Tyr Template
   tyr-app:
     build: 
       context: .
       dockerfile: ./docker/Dockerfile.apache
-    container_name: artemis_app
+    container_name: tyr_app
     ports:
-      - "83:80"
+      - "84:80"
     volumes:
       - ./tyr:/var/www/html
     environment:
-      - MYSQL_HOST=adminzone-db
+      - MYSQL_HOST=panel_db
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=tyr-db
       - MYSQL_USER=ironman
@@ -109,7 +109,7 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
     networks:
-      - network  
+      - proxy-network  
 
   #Adminzone admin panel
   panel_app:
@@ -118,7 +118,7 @@ services:
       dockerfile: ./docker/Dockerfile.apache
     container_name: panel_app
     ports:
-      - "84:80"
+      - "85:80"
     volumes:
       - ./adminzone:/var/www/html
     depends_on:
@@ -129,6 +129,8 @@ services:
       - MYSQL_DATABASE=web-app
       - MYSQL_USER=ironman
       - MYSQL_PASSWORD=1q2w3e4r
+    networks:
+      - proxy-network
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
 
@@ -143,9 +145,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql:/var/lib/mysql
     networks:
-      - network
+      - proxy-network
 
   myadmin:
     image: phpmyadmin/phpmyadmin
@@ -158,7 +160,7 @@ services:
     depends_on:
       - panel_db
     networks:
-      - network
+      - proxy-network
 
 networks:
   proxy-network:

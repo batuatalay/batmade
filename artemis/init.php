@@ -1,7 +1,7 @@
 <?php
 define("DEVELOPMENT", true);
 if(DEVELOPMENT) {
-	define("ENV", "http://localhost:81/");
+	define("ENV", "http://localhost:82/");
 	define("BASE", "/var/www/html/");
 	define("DBHOST", "panel_db");
 	define("DBNAME", "web-app");
