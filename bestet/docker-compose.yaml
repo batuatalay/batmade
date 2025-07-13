@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  bestet_app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: bestet_app
+    ports:
+      - "83:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - MYSQL_HOST=adminzone-db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=bestet-db
+      - MYSQL_USER=ironman
+      - MYSQL_PASSWORD=1q2w3e4r
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    networks:
+      - network  
+
+networks:
+  network:
+    external:
+      name: adminzone_default

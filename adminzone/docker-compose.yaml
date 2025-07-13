@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  panel_db:
+    image: mysql:latest
+    container_name: panel_db
+    environment:
+      MYSQL_ROOT_PASSWORD: '1q2w3e4r'
+      MYSQL_DATABASE: 'web-app'
+      MYSQL_USER: 'ironman'
+      MYSQL_PASSWORD: '1q2w3e4r'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  myadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: myadmin
+    environment:
+      PMA_HOST: panel_db
+      PMA_PORT: 3306
+    ports:
+      - "8090:80"
+    depends_on:
+      - panel_db
+
+  panel_app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: panel_app
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - panel_db
+    environment:
+      - MYSQL_HOST=panel_db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=web-app
+      - MYSQL_USER=ironman
+      - MYSQL_PASSWORD=1q2w3e4r
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+
+volumes:
+  mysql_data:

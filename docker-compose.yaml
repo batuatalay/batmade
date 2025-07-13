@@ -1,0 +1,170 @@
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'      # HTTP
+      - '443:443'    # HTTPS
+      - '81:81'      # Admin Web Port
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    environment:
+      # Veritabanı bağlantı ayarları
+      DB_HOST: nginx-proxy-manager-db
+      DB_PORT: 3306
+      DB_NAME: npm
+      DB_USER: npm
+      DB_PASS: npm_password
+    depends_on:
+      - nginx-proxy-manager-db
+    networks:
+      - proxy-network
+
+  nginx-proxy-manager-db:
+    image: 'mysql:8.0'
+    container_name: nginx-proxy-manager-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: npm
+      MYSQL_USER: npm
+      MYSQL_PASSWORD: npm_password
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - proxy-network
+
+  # Basit web sunucusu
+  batmade-web:
+    image: 'nginx:alpine'
+    container_name: batmade-web
+    restart: unless-stopped
+    volumes:
+      - ./html:/usr/share/nginx/html
+    expose:
+      - "80"
+    networks:
+      - proxy-network
+
+  #Artemis template
+  artemis-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: artemis_app
+    ports:
+      - "81:80"
+    volumes:
+      - ./artemis:/var/www/html
+    environment:
+      - MYSQL_HOST=adminzone-db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=artemis-db
+      - MYSQL_USER=ironman
+      - MYSQL_PASSWORD=1q2w3e4r
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    networks:
+      - network  
+
+  #bestet Template
+  bestet-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: artemis_app
+    ports:
+      - "82:80"
+    volumes:
+      - ./bestet:/var/www/html
+    environment:
+      - MYSQL_HOST=adminzone-db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=bestet-db
+      - MYSQL_USER=ironman
+      - MYSQL_PASSWORD=1q2w3e4r
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    networks:
+      - network  
+
+  #Tyr Template
+  tyr-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: artemis_app
+    ports:
+      - "83:80"
+    volumes:
+      - ./tyr:/var/www/html
+    environment:
+      - MYSQL_HOST=adminzone-db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=tyr-db
+      - MYSQL_USER=ironman
+      - MYSQL_PASSWORD=1q2w3e4r
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    networks:
+      - network  
+
+  #Adminzone admin panel
+  panel_app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: panel_app
+    ports:
+      - "84:80"
+    volumes:
+      - ./adminzone:/var/www/html
+    depends_on:
+      - panel_db
+    environment:
+      - MYSQL_HOST=panel_db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=web-app
+      - MYSQL_USER=ironman
+      - MYSQL_PASSWORD=1q2w3e4r
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+
+  panel_db:
+    image: mysql:latest
+    container_name: panel_db
+    environment:
+      MYSQL_ROOT_PASSWORD: '1q2w3e4r'
+      MYSQL_DATABASE: 'web-app'
+      MYSQL_USER: 'ironman'
+      MYSQL_PASSWORD: '1q2w3e4r'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - network
+
+  myadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: myadmin
+    environment:
+      PMA_HOST: panel_db
+      PMA_PORT: 3306
+    ports:
+      - "8090:80"
+    depends_on:
+      - panel_db
+    networks:
+      - network
+
+networks:
+  proxy-network:
+    driver: bridge
+
+volumes:
+  data:
+  letsencrypt:
+  mysql:
