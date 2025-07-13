@@ -52,7 +52,7 @@ services:
   artemis-app:
     build: 
       context: .
-      dockerfile: Dockerfile.apache
+      dockerfile: ./docker/Dockerfile.apache
     container_name: artemis_app
     ports:
       - "81:80"
@@ -73,7 +73,7 @@ services:
   bestet-app:
     build: 
       context: .
-      dockerfile: Dockerfile.apache
+      dockerfile: ./docker/Dockerfile.apache
     container_name: artemis_app
     ports:
       - "82:80"
@@ -94,7 +94,7 @@ services:
   tyr-app:
     build: 
       context: .
-      dockerfile: Dockerfile.apache
+      dockerfile: ./docker/Dockerfile.apache
     container_name: artemis_app
     ports:
       - "83:80"
@@ -115,7 +115,7 @@ services:
   panel_app:
     build: 
       context: .
-      dockerfile: Dockerfile.apache
+      dockerfile: ./docker/Dockerfile.apache
     container_name: panel_app
     ports:
       - "84:80"
