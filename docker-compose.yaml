@@ -11,27 +11,14 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     environment:
-      DB_HOST: nginx-proxy-manager-db
+      # Tek MySQL kullan
+      DB_HOST: mysql_db
       DB_PORT: 3306
       DB_NAME: npm
-      DB_USER: npm
-      DB_PASS: npm_password
+      DB_USER: ironman
+      DB_PASS: 1q2w3e4r
     depends_on:
-      - nginx-proxy-manager-db
-    networks:
-      - proxy-network
-
-  nginx-proxy-manager-db:
-    image: 'mysql:8.0'
-    container_name: nginx-proxy-manager-db
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: npm
-      MYSQL_USER: npm
-      MYSQL_PASSWORD: npm_password
-    volumes:
-      - nginx_mysql:/var/lib/mysql
+      - mysql_db
     networks:
       - proxy-network
 
@@ -58,13 +45,15 @@ services:
     volumes:
       - ./bestet:/var/www/html
     environment:
-      - MYSQL_HOST=panel_db
+      - MYSQL_HOST=mysql_db
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=bestet-db
       - MYSQL_USER=ironman
       - MYSQL_PASSWORD=1q2w3e4r
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    depends_on:
+      - mysql_db
     networks:
       - proxy-network  
 
@@ -79,13 +68,15 @@ services:
     volumes:
       - ./tyr:/var/www/html
     environment:
-      - MYSQL_HOST=panel_db
+      - MYSQL_HOST=mysql_db
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=tyr-db
       - MYSQL_USER=ironman
       - MYSQL_PASSWORD=1q2w3e4r
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    depends_on:
+      - mysql_db
     networks:
       - proxy-network  
 
@@ -100,9 +91,9 @@ services:
     volumes:
       - ./adminzone:/var/www/html
     depends_on:
-      - panel_db
+      - mysql_db
     environment:
-      - MYSQL_HOST=panel_db
+      - MYSQL_HOST=mysql_db
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=web-app
       - MYSQL_USER=ironman
@@ -112,18 +103,22 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
 
-  panel_db:
-    image: mysql:latest
-    container_name: panel_db
+  # TEK MYSQL SERVİSİ - Tüm veritabanları burada
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: '1q2w3e4r'
-      MYSQL_DATABASE: 'web-app'
       MYSQL_USER: 'ironman'
       MYSQL_PASSWORD: '1q2w3e4r'
+      # İlk veritabanı - diğerleri init script ile oluşturulacak
+      MYSQL_DATABASE: 'web-app'
     ports:
       - "3306:3306"
     volumes:
-      - panel_mysql:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     networks:
       - proxy-network
 
@@ -131,12 +126,14 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: myadmin
     environment:
-      PMA_HOST: panel_db
+      PMA_HOST: mysql_db
       PMA_PORT: 3306
+      PMA_USER: ironman
+      PMA_PASSWORD: 1q2w3e4r
     ports:
       - "8090:80"
     depends_on:
-      - panel_db
+      - mysql_db
     networks:
       - proxy-network
 
@@ -147,5 +144,4 @@ networks:
 volumes:
   data:
   letsencrypt:
-  nginx_mysql:
-  panel_mysql:
+  mysql_data:
