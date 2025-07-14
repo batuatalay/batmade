@@ -119,21 +119,21 @@ services:
       dockerfile: ./docker/Dockerfile.apache
     container_name: panel_app
     ports:
-      - "85:80"
+      - "90:80"
     volumes:
       - ./adminzone:/var/www/html
-    depends_on:
-      - mysql_db
     environment:
-      - MYSQL_HOST=mysql_db
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=web-app
-      - MYSQL_USER=ironman
-      - MYSQL_PASSWORD=1q2w3e4r
-    networks:
-      - proxy-network
+      MYSQL_HOST: mysql_db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: web-app
+      MYSQL_USER: ironman
+      MYSQL_PASSWORD: 1q2w3e4r
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+    depends_on:
+      - mysql_db
+    networks:
+      - proxy-network
 
 networks:
   proxy-network:
