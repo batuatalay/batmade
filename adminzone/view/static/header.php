@@ -172,9 +172,8 @@
                                     </li>
                                 </ul>
                                 <div class="col-lg-12" style="position: absolute; bottom: 15px; left: 10px;">
-                                    <img src="assets/img/newmore-logo-beyaz.png" style="width:90px;">
                                     <br>
-                                    <a href="https://www.newmore.com.tr">Newmore Reklam ve Yazılım Şirketi</a>
+                                    <a href="https://www.batmade.net">Batmade Adminzone admin panel</a>
                                     
                                 </div>
                                 

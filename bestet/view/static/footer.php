@@ -52,7 +52,7 @@ $settings = $args['settings'];
         <p>© <span>Copyright</span> <strong class="sitename"><?=$settings['name'];?></strong> <span>All Rights Reserved</span></p>
         <div class="credits">
 
-          Developed by <a href="https://newmore.com.tr/">Newmore</a>
+          Developed by <a href="https://batmade.net/">Batmade.net</a>
         </div>
       </div> 
     </div>

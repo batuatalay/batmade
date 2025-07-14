@@ -5,8 +5,8 @@
 		
 		public function __construct() {
 			if(DEVELOPMENT != true && 
-				ENV != "https://adminzone.newmore.com.tr/" && 
-				($_SERVER['HTTP_HOST'] != ENV || $_SERVER['HTTP_HOST'] != "https://adminzone.newmore.com.tr/")) {
+				ENV != "https://adminzone.batmade.net/" && 
+				($_SERVER['HTTP_HOST'] != ENV || $_SERVER['HTTP_HOST'] != "https://adminzone.batmade.net/")) {
 	            exit;
 	        }
 			$dirName = dirname($_SERVER['SCRIPT_NAME']);
