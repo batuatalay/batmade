@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batmade.com - Yapım Aşamasındadır</title>
+    <title>Website Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -12,160 +12,246 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 600px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .website-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .website-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .website-preview {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .website-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .website-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .website-preview:hover img {
+            transform: scale(1.05);
+        }
+
+        .placeholder-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #6c757d;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .website-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .website-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .website-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 12px;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
-        .logo {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .website-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
         }
 
-        .title {
-            font-size: 2rem;
-            margin-bottom: 20px;
+        .website-link:hover {
             opacity: 0.9;
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.8;
-            line-height: 1.6;
-        }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #81C784);
-            width: 65%;
-            border-radius: 4px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            animation: bounce 3s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        .contact-info {
-            margin-top: 30px;
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-
-        .email {
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .email:hover {
-            text-decoration: underline;
-        }
-
-        .date {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 30px 20px;
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
             }
             
-            .logo {
-                font-size: 2.5rem;
-            }
-            
-            .title {
-                font-size: 1.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .icon {
-                font-size: 3rem;
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 30px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icon">🚧</div>
-        <div class="logo">BATMADE</div>
-        <div class="title">Yapım Aşamasındadır</div>
-        <div class="subtitle">
-            Sitemiz şu anda geliştirilme aşamasındadır. 
-            Çok yakında sizlerle buluşacağız!
-        </div>
+        <h1>Website Portfolio</h1>
         
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        
-        <div class="contact-info">
-            İletişim için: <a href="mailto:info@batmade.com" class="email">info@batmade.com</a>
-        </div>
-        
-        <div class="date">
-            Son güncelleme: <span id="current-date"></span>
+        <div class="grid">
+            <div class="website-card">
+                <div class="website-preview">
+                    <img src="https://via.placeholder.com/400x200/667eea/ffffff?text=E-Commerce+Site" alt="E-Commerce Website">
+                </div>
+                <div class="website-name">Bestet</div>
+                <div class="website-description">
+                    Veteriner klinikleri için özel olarak tasarlanmış kurumsal web sitesi
+                </div>
+                <div class="website-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">PHP MVC Framework</span>
+                    <span class="tag">Mysql</span>
+                </div>
+                <a href="#" class="website-link">Projeyi Görüntüle</a>
+            </div>
+
+            <div class="website-card">
+                <div class="website-preview">
+                    <img src="https://via.placeholder.com/400x200/fcb69f/ffffff?text=Kurumsal+Website" alt="Kurumsal Website">
+                </div>
+                <div class="website-name">Tyr</div>
+                <div class="website-description">
+                    Hukuk insanları ve Siyasiler için tasarlanmış kurumsal web sitesi
+                </div>
+                 <div class="website-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">PHP MVC Framework</span>
+                    <span class="tag">Mysql</span>
+                </div>
+                <a href="#" class="website-link">Projeyi Görüntüle</a>
+            </div>
+
+            <div class="website-card">
+                <div class="website-preview">
+                    <img src="https://via.placeholder.com/400x200/a8edea/333333?text=Blog+Platform" alt="Blog Platform">
+                </div>
+                <div class="website-name">Kişisel Blog</div>
+                <div class="website-description">
+                    Responsive tasarım ve hızlı yükleme süreleri ile optimize edilmiş kişisel blog platformu.
+                </div>
+                 <div class="website-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">PHP MVC Framework</span>
+                    <span class="tag">Mysql</span>
+                </div>
+                <a href="#" class="website-link">Projeyi Görüntüle</a>
+            </div>
+
+            <div class="website-card">
+                <div class="website-preview">
+                    <img src="https://via.placeholder.com/400x200/ff9a9e/ffffff?text=Restoran+Menu" alt="Restoran Menu">
+                </div>
+                <div class="website-name">Dijital Menü</div>
+                <div class="website-description">
+                    QR kod entegrasyonu ile dijital menü sistemi ve online sipariş yönetimi.
+                </div>
+                 <div class="website-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">PHP MVC Framework</span>
+                    <span class="tag">Mysql</span>
+                </div>
+                <a href="#" class="website-link">Projeyi Görüntüle</a>
+            </div>
+
+            <div class="website-card">
+                <div class="website-preview">
+                    <img src="https://via.placeholder.com/400x200/a1c4fd/333333?text=Portfolio+Site" alt="Portfolio Site">
+                </div>
+                <div class="website-name">Kreatif Portfolyo</div>
+                <div class="website-description">
+                    Sanatçı ve tasarımcılar için özel olarak tasarlanmış interaktif portfolyo web sitesi.
+                </div>
+                 <div class="website-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">PHP MVC Framework</span>
+                    <span class="tag">Mysql</span>
+                </div>
+                <a href="#" class="website-link">Projeyi Görüntüle</a>
+            </div>
+
+            <div class="website-card">
+                <div class="website-preview">
+                    <img src="https://via.placeholder.com/400x200/fbc2eb/333333?text=Egitim+Platform" alt="Eğitim Platform">
+                </div>
+                <div class="website-name">Online Öğrenme</div>
+                <div class="website-description">
+                    Video dersleri, quiz sistemi ve ilerleme takibi ile kapsamlı online eğitim platformu.
+                </div>
+                <div class="website-tags">
+                    <span class="tag">Angular</span>
+                    <span class="tag">Express.js</span>
+                    <span class="tag">PostgreSQL</span>
+                </div>
+                <a href="#" class="website-link">Projeyi Görüntüle</a>
+            </div>
         </div>
     </div>
-
-    <script>
-        // Güncel tarihi göster
-        const currentDate = new Date();
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            timeZone: 'Europe/Istanbul'
-        };
-        document.getElementById('current-date').textContent = 
-            currentDate.toLocaleDateString('tr-TR', options);
-    </script>
 </body>
 </html>
