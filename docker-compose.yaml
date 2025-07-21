@@ -45,14 +45,7 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     environment:
-      # Tek MySQL kullan
-      DB_HOST: mysql_db
-      DB_PORT: 3306
-      DB_NAME: npm
-      DB_USER: ironman
-      DB_PASS: 1q2w3e4r
-    depends_on:
-      - mysql_db
+      # SQLite kullan (varsayılan)
     networks:
       - proxy-network
 
