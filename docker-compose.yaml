@@ -9,7 +9,7 @@ services:
       MYSQL_USER: 'ironman'
       MYSQL_PASSWORD: '1q2w3e4r'
       MYSQL_DATABASE: 'web-app'
-    command: --default-authentication-plugin=mysql_native_password --innodb-buffer-pool-size=128M
+    command: --default-authentication-plugin=mysql_native_password --innodb-buffer-pool-size=64M --max-connections=50
     ports:
       - "3306:3306"
     volumes:
@@ -17,10 +17,10 @@ services:
       - ./mysql-init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1q2w3e4r"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
     networks:
       - proxy-network
 
