@@ -17,12 +17,12 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
         <!-- Vendor CSS -->
-        <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-        <link rel="stylesheet" href="assets/vendor/animate/animate.compat.css">
-        <link rel="stylesheet" href="assets/vendor/font-awesome/css/all.min.css" />
-        <link rel="stylesheet" href="assets/vendor/boxicons/css/boxicons.min.css" />
-        <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-        <link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+        <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="/assets/vendor/animate/animate.compat.css">
+        <link rel="stylesheet" href="/assets/vendor/font-awesome/css/all.min.css" />
+        <link rel="stylesheet" href="/assets/vendor/boxicons/css/boxicons.min.css" />
+        <link rel="stylesheet" href="/assets/vendor/magnific-popup/magnific-popup.css" />
+        <link rel="stylesheet" href="/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
 
 
         <?php 
@@ -32,17 +32,17 @@
         ?>
 
         <!-- Theme CSS -->
-        <link rel="stylesheet" href="assets/css/theme.css" />
+        <link rel="stylesheet" href="/assets/css/theme.css" />
 
         <!-- Skin CSS -->
-        <link rel="stylesheet" href="assets/css/skins/default.css" />
+        <link rel="stylesheet" href="/assets/css/skins/default.css" />
 
         <!-- Theme Custom CSS -->
-        <link rel="stylesheet" href="assets/css/custom.css">
+        <link rel="stylesheet" href="/assets/css/custom.css">
 
         <!-- Head Libs -->
-        <script src="assets/vendor/modernizr/modernizr.js"></script>
-        <script src="assets/vendor/jquery/jquery.js"></script>
+        <script src="/assets/vendor/modernizr/modernizr.js"></script>
+        <script src="/assets/vendor/jquery/jquery.js"></script>
 
     </head>
     <body>
@@ -52,7 +52,7 @@
             <header class="header">
                 <div class="logo-container">
                     <a href="/main" class="logo" target = "_self">
-                        <img src="assets/img/adminZone.png" width="100" style="margin-top: -5px;" alt="Porto Admin" />
+                        <img src="/assets/img/adminZone.png" width="100" style="margin-top: -5px;" alt="Porto Admin" />
                     </a>
                     <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
                         <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
@@ -102,7 +102,7 @@
                     <div class="nano">
                         <div class="nano-content">
                             <nav id="menu" class="nav-main" role="navigation">
-                                <!-- <img src="assets/img/adminZone.png" width="120px" style="margin-left: 30px;" /> -->
+                                <!-- <img src="/assets/img/adminZone.png" width="120px" style="margin-left: 30px;" /> -->
                                 <ul class="nav nav-main">
                                     <li class=" <?= ($args['active'] == "home") ? "nav-active" : ""; ?>">
                                         <a class="nav-link" href="main" target = "_self">

@@ -92,6 +92,7 @@ class Page extends SimpleController{
 	}
 
 	public static function edit($params) {
+		var_dump($params);exit;
 		if (strpos($params['file'], "data:image") !== false) {
 			$response = File::convertBase64($params['file']);
 			if($response['code'] == 200) {

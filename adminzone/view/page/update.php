@@ -21,7 +21,7 @@ $categories = $args[1];
                     </header>
                     <div class="card-body">
                             <label>Görsel : </label><br/>
-                            <img src="<?=$page['file']?>" style="width: 30%;" ><hr/>
+                            <img src="/<?=$page['file']?>" style="width: 30%;" ><hr/>
 
                             <label>Başlık</label>
                             <input type="text" class="form-control" id="title" value = "<?=$page['title']?>">
