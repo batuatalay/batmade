@@ -9,18 +9,12 @@ services:
       MYSQL_USER: 'ironman'
       MYSQL_PASSWORD: '1q2w3e4r'
       MYSQL_DATABASE: 'web-app'
-    command: --default-authentication-plugin=mysql_native_password --innodb-buffer-pool-size=64M --max-connections=50
+    command: --default-authentication-plugin=mysql_native_password --innodb-buffer-pool-size=32M --max-connections=20
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql-init:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1q2w3e4r"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+      - ./docker:/docker-entrypoint-initdb.d
     networks:
       - proxy-network
 
@@ -35,8 +29,7 @@ services:
     ports:
       - "8090:80"
     depends_on:
-      mysql_db:
-        condition: service_healthy
+      - mysql_db
     networks:
       - proxy-network
 
@@ -59,8 +52,7 @@ services:
       DB_USER: ironman
       DB_PASS: 1q2w3e4r
     depends_on:
-      mysql_db:
-        condition: service_healthy
+      - mysql_db
     networks:
       - proxy-network
 
@@ -95,8 +87,7 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
     depends_on:
-      mysql_db:
-        condition: service_healthy
+      - mysql_db
     networks:
       - proxy-network  
 
@@ -119,8 +110,7 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
     depends_on:
-      mysql_db:
-        condition: service_healthy
+      - mysql_db
     networks:
       - proxy-network  
 
@@ -143,8 +133,7 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
     depends_on:
-      mysql_db:
-        condition: service_healthy
+      - mysql_db
     networks:
       - proxy-network
 
